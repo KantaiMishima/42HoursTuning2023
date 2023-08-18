@@ -76,7 +76,7 @@ export const getUsersByUserIds = async (
   }
 
   const [rows] = await pool.query<RowDataPacket[]>(
-    `SELECT u.user_id, u.user_name, u.office_id, u.user_icon_id, o.office_name, f.file_name FROM user AS u JOIN office AS o ON u.office_id = o.office_id JOIN file AS f ON u.user_icon_id = f.file_id WHERE u.user_id IN (?)`,
+    `SELECT u.user_id, u.user_name, u.office_id, u.user_icon_id, o.office_name, f.file_name FROM user AS u JOIN office AS o ON u.office_id = o.office_id JOIN file AS f ON u.user_icon_id = f.file_id WHERE u.user_id IN (?) ORDER BY u.user_id`,
     [userIds]
   );
 
