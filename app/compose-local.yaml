@@ -37,8 +37,20 @@ services:
       - ../volume/mysql:/var/lib/mysql
       - ./mysql/mysql_migration:/etc/mysql/mysql_migration
       - ./mysql/mysql.conf:/etc/mysql/conf.d/mysql.cnf
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    volumes:
+      - ./proc:/host/proc
+      - ./sys:/host/sys
+      - ./rootfs:/rootfs
+    ports:
+      - 9100:9100
   prometheus:
     container_name: prometheus
     image: prom/prometheus
     ports:
       - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
