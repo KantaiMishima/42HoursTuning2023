@@ -229,7 +229,7 @@ export const getUserForFilter = async (
   let userRows: RowDataPacket[];
   if (!userId) {
     [userRows] = await pool.query<RowDataPacket[]>(
-      "SELECT user_id, user_name, office_id, user_icon_id FROM user ORDER BY RAND() LIMIT 1"
+	  "SELECT user_id, user_name, office_id, user_icon_id FROM user u INNER JOIN (SELECT CEIL(RAND() * (SELECT MAX(rownum) FROM user)) AS rand) AS tmp ON u.rownum = tmp.rand"
     );
   } else {
     [userRows] = await pool.query<RowDataPacket[]>(
